@@ -7,6 +7,14 @@ if(!isset($_SESSION['log-admin'])) {
 }
 ?>
 
+ <?php
+$get_id=$_GET['id'];
+$query2="SELECT * from tbl_subject where subject_id='$get_id'";
+$smtp2=$conn->prepare($query2);
+$smtp2->execute();
+$result2=$smtp2->fetch();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,94 +90,119 @@ if(!isset($_SESSION['log-admin'])) {
             <!-- row -->	
 			<div class="page-titles">
 				<ol class="breadcrumb">
-					<li><i class="fa fa-home fa-1x text-primary"> </i></li>
-					<li><h5 class="bc-title p-2 text-primary"> <b>Dashboard</b></h5></li>
-
+					<li><h5 class="bc-title"> View Subject </h5></li>
 					
 				</ol>
 				
 			</div>
-			<div class="container-fluid">
+
+					
+
+
+
+<div class="container-fluid">
 				<div class="row">
-					<div class="col-xl-3 col-sm-6">
-						<div class="card box-hover">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<!-- <div class="">
-										<i class="fa fa-user fa-2x text-primary"> </i>
-									</div> -->
-									<div class="total-projects ms-3">
+							  
+			<div class="col-xl-12 col-lg-12">
+			  
+			  	
+				
+				
+			  
+			  
+                                <div class="basic-form">
+			
+			 
+			                <div class="col-xl-12">
+                        <div class="card dz-card" id="bootstrap-table5">
+                            <div class="card-header flex-wrap d-flex justify-content-between  border-0">
+								<div>
+                                	<h4 class="card-title">SUBJECT</h4>
+                                	
+								</div>
+								<li class="nav-item" >
+										<a href="subject.php">  <button class="btn btn-primary btn-sm " id="home-tab-4"   type="button" role="tab" aria-selected="true">Back</button></a>
+									</li>
+									
+									
+									
+							</div>
+                           	<!-- tab-content -->	
+							<div class="tab-content" id="myTabContent-4">
+								<div class="tab-pane fade show active" id="leftPosition" role="tabpanel" aria-labelledby="home-tab-4">
+									<div class="card-body pt-0">
+										<div class="table-responsive">
+											<table class="table table-bordered table-responsive-sm">
+												
+										<tr>    <th class="">Class</th>
+                                 <?php 
+				           	$classID=$result2['class_id'];
+                            $queryw="SELECT * from tbl_class where class_id='$classID'";
+                            $smtpw=$conn->prepare($queryw);
+                            $smtpw->execute();
+                            $resultw=$smtpw->fetch()
+                            ?>
+												<td class="" ><?php echo $resultw['class_name'];?></td>
+                  </tr>
+												<?php 
+                 $query="SELECT * from tbl_subject where subject_id='$get_id'" ;
+                 $smtp=$conn->prepare($query);
+                 $smtp->execute();
+                 $result=$smtp->fetch()
+                 ?>
+                              <tr>
+                                         <th >Subject Name</th>
+                                 
+					
+                                  
+                                                <td colspan="2" class="text-primary"> <b><?php echo $result['subject_name'];?></b></td>
+                                                
+                  
 
-										<h3 class="text-primary count text-primary"></h3> 
-										<a href="truck_owner.php"><b> Class</b> </a>
+										
+												
+											
+
+												
+
+
+
+
+										
+											
+
+												
+												
+												
+											</table>
+										
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-sm-6">
-						<div class="card box-hover">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<!-- <div class="">
-										<i class="fa fa-user fa-2x text-primary"> </i>
-									</div> -->
-									<div class="total-projects ms-3">
-
-										<h3 class="text-primary count text-primary"></h3> 
-										<a href="truck_owner.php"><b> Subject</b> </a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-sm-6">
-						<div class="card box-hover">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<!-- <div class="">
-										<i class="fa fa-user fa-2x text-primary"> </i>
-									</div> -->
-									<div class="total-projects ms-3">
-
-										<h3 class="text-primary count text-primary"></h3> 
-										<a href="truck_owner.php"><b> Chapter</b> </a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-sm-6">
-						<div class="card box-hover">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<!-- <div class="">
-										<i class="fa fa-user fa-2x text-primary"> </i>
-									</div> -->
-									<div class="total-projects ms-3">
-
-										<h3 class="text-primary count text-primary"></h3> 
-										<a href="truck_owner.php"><b> Lesson</b> </a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 							
-					
-							
-					
-					
-					
-					
-					
-					
-					
-					
-				</div>
+								
+							<!-- /tab-content -->		
+                           
+                        </div>
+                    </div>
+                   </div>
+				 
 			
 			</div>
-        </div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+	
+		
 		
  
 		
@@ -190,7 +223,7 @@ if(!isset($_SESSION['log-admin'])) {
         ***********************************-->
 
 
-	</div>
+	
     <!--**********************************
         Main wrapper end
     ***********************************-->
@@ -237,3 +270,13 @@ if(!isset($_SESSION['log-admin'])) {
 	
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+ 

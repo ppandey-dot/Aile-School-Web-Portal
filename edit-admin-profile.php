@@ -5,7 +5,47 @@ if(!isset($_SESSION['log-admin'])) {
     header('location: login.php');
 } else {
 }
-?>
+
+
+$query="SELECT * FROM login WHERE id='1'";
+    $stmt=$conn->prepare($query);
+    $stmt->execute();
+    $result = $stmt->fetch();
+  
+
+//edit and update query
+   if(isset($_POST['update'])){
+    $uname=$_POST['uname'];
+    $email=$_POST['email'];
+    
+ if($_FILES['pic']['name']==''){
+    $unique_image=$result['img'];
+      
+  }
+  else
+  {
+    $file_name = $_FILES['pic']['name'];
+    $file_size = $_FILES['pic']['size'];
+    $file_temp = $_FILES['pic']['tmp_name'];
+
+    $div = explode('.', $file_name);
+    $file_ext = strtolower(end($div));
+    $unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
+    $profile = "images/".$unique_image;
+
+    move_uploaded_file($file_temp, $profile);
+}   
+    
+   $update_query = "UPDATE login SET username='$uname',email='$email', img='$unique_image' WHERE id='1'";
+if ($conn->query($update_query)) {
+   header('location:admin-profile.php');
+}else{
+  echo "<script type= 'text/javascript'>alert('Data Not Successfully Updated. Please Try Again!!);</script>";
+}
+}
+ ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -78,101 +118,64 @@ if(!isset($_SESSION['log-admin'])) {
 		<!--**********************************
             Content body start
         ***********************************-->
-       <div class="content-body">
+ <div class="content-body">
             <!-- row -->	
 			<div class="page-titles">
 				<ol class="breadcrumb">
-					<li><i class="fa fa-home fa-1x text-primary"> </i></li>
-					<li><h5 class="bc-title p-2 text-primary"> <b>Dashboard</b></h5></li>
-
+					<li><h5 class="bc-title">Edit Admin Profile</h5></li>
 					
 				</ol>
 				
 			</div>
+
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-xl-3 col-sm-6">
-						<div class="card box-hover">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<!-- <div class="">
-										<i class="fa fa-user fa-2x text-primary"> </i>
-									</div> -->
-									<div class="total-projects ms-3">
+							  
+			<div class="col-xl-6 col-lg-12">
+			  <div class="card">
+			  	
+				<div class="card-header">
+                                <h4 class="card-title">Edit Admin Profile</h4>
+                            </div>
+				
+			  
+			  <div class="card-body">
+                                <div class="basic-form">
+			  <form action="" method="POST" enctype="multipart/form-data">
+                   <div  class=" col-md-12 mb-3">
+			  	 <label class="form-label">User Name*</label>
+			    <input class="form-control" type="text" name="uname" required="required" value="<?php echo $result['username'];?>" />
+                       </div>
 
-										<h3 class="text-primary count text-primary"></h3> 
-										<a href="truck_owner.php"><b> Class</b> </a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-sm-6">
-						<div class="card box-hover">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<!-- <div class="">
-										<i class="fa fa-user fa-2x text-primary"> </i>
-									</div> -->
-									<div class="total-projects ms-3">
+                       <div  class=" col-md-12 mb-3">
+                        <label class="foem_label">E-mail*</label>
+                          
+                        <input class="form-control" type="email" name="email"  required="required" value="<?php echo $result['email'];?>"/>
+                          
+                          </div>
+                         <div  class=" col-md-12 mb-3">
+                          <label class="form-label">Profile Picture*</label>
+                          <img src="images/<?php echo $result['img'];?>" style="width:400px;"><br><br>
+                        <input type="file" name="pic"  style="margin-bottom:10px;">
+                        </div>
+                        
+                
+            
+                         
+                     
+                     <button class="btn btn-secondary "><a href='admin-profile.php' style="color:white;">Back</a></button>
+                     <button class="btn btn-primary mr-2  " type="submit" name="update">Update</button>
 
-										<h3 class="text-primary count text-primary"></h3> 
-										<a href="truck_owner.php"><b> Subject</b> </a>
-									</div>
-								</div>
-							</div>
+			            
 						</div>
+	                     
 					</div>
-					<div class="col-xl-3 col-sm-6">
-						<div class="card box-hover">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<!-- <div class="">
-										<i class="fa fa-user fa-2x text-primary"> </i>
-									</div> -->
-									<div class="total-projects ms-3">
-
-										<h3 class="text-primary count text-primary"></h3> 
-										<a href="truck_owner.php"><b> Chapter</b> </a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-sm-6">
-						<div class="card box-hover">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<!-- <div class="">
-										<i class="fa fa-user fa-2x text-primary"> </i>
-									</div> -->
-									<div class="total-projects ms-3">
-
-										<h3 class="text-primary count text-primary"></h3> 
-										<a href="truck_owner.php"><b> Lesson</b> </a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-							
-					
-							
-					
-					
-					
-					
-					
-					
-					
-					
-				</div>
-			
+				 </div>
+			</form>
 			</div>
-        </div>
-		
- 
-		
+		</div>
+	</div>
+
         <!--**********************************
             Footer start
         ***********************************-->
@@ -190,7 +193,7 @@ if(!isset($_SESSION['log-admin'])) {
         ***********************************-->
 
 
-	</div>
+	
     <!--**********************************
         Main wrapper end
     ***********************************-->

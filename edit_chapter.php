@@ -7,6 +7,14 @@ if(!isset($_SESSION['log-admin'])) {
 }
 ?>
 
+ <?php
+$get_id=$_GET['id'];
+$query2="SELECT * from tbl_chapter where chapter_id='$get_id'";
+$smtp2=$conn->prepare($query2);
+$smtp2->execute();
+$result2=$smtp2->fetch();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,94 +90,111 @@ if(!isset($_SESSION['log-admin'])) {
             <!-- row -->	
 			<div class="page-titles">
 				<ol class="breadcrumb">
-					<li><i class="fa fa-home fa-1x text-primary"> </i></li>
-					<li><h5 class="bc-title p-2 text-primary"> <b>Dashboard</b></h5></li>
-
+					<li><h5 class="bc-title">Edit Chapter </h5></li>
 					
 				</ol>
 				
 			</div>
+
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-xl-3 col-sm-6">
-						<div class="card box-hover">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<!-- <div class="">
-										<i class="fa fa-user fa-2x text-primary"> </i>
-									</div> -->
-									<div class="total-projects ms-3">
-
-										<h3 class="text-primary count text-primary"></h3> 
-										<a href="truck_owner.php"><b> Class</b> </a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-sm-6">
-						<div class="card box-hover">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<!-- <div class="">
-										<i class="fa fa-user fa-2x text-primary"> </i>
-									</div> -->
-									<div class="total-projects ms-3">
-
-										<h3 class="text-primary count text-primary"></h3> 
-										<a href="truck_owner.php"><b> Subject</b> </a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-sm-6">
-						<div class="card box-hover">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<!-- <div class="">
-										<i class="fa fa-user fa-2x text-primary"> </i>
-									</div> -->
-									<div class="total-projects ms-3">
-
-										<h3 class="text-primary count text-primary"></h3> 
-										<a href="truck_owner.php"><b> Chapter</b> </a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-sm-6">
-						<div class="card box-hover">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<!-- <div class="">
-										<i class="fa fa-user fa-2x text-primary"> </i>
-									</div> -->
-									<div class="total-projects ms-3">
-
-										<h3 class="text-primary count text-primary"></h3> 
-										<a href="truck_owner.php"><b> Lesson</b> </a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+							  
+			<div class="col-xl-6 col-lg-12">
+			  <div class="card">
+			  	
+				<div class="card-header">
+                                <h4 class="card-title">Edit Chapter </h4>
+                            </div>
+				
+			  
+			  <div class="card-body">
+                                <div class="basic-form">
+			  <form action="" method="POST" enctype="multipart/form-data">
+			                  
+                             <div class="col-md-12 mb-3">
 							
+							<label class="control-label">Class</label>
+										<select name="class_name" class="form-control" required="required"
+										onchange="myfunn(this.value)">
+
+                                       <?php 
+					$classID=$result2['class'];
+                 $queryw="SELECT * from tbl_class where class_id='$classID'";
+                 $smtpw=$conn->prepare($queryw);
+                 $smtpw->execute();
+                 $resultw=$smtpw->fetch()
+                 ?>
 					
+						<option  value="<?php echo $resultw['class_id'];?>"><?php echo $resultw['class_name'];?></option>
+
+
+
+
+											<option value="">--Select Class--</option>
+											<?php 
+                 $query="SELECT * from tbl_class where class_status='Active'";
+                 $smtp=$conn->prepare($query);
+                 $smtp->execute();
+                 ?>
+
+                 <?php while($result=$smtp->fetch()){?>
+
+											<option value="<?php echo $result['class_id'];?>" ><?php echo $result['class_name'];?></option>
+											<?php }?>
+										</select>
+						</div>
+                                	<div class="col-md-6 mb-3">
+								       
+										<label class="control-label">Subject</label>
+										<select name="subject_name"
+										 class="form-control dataload"
+										 required="required"  >
+											<option value="">--Select Subject--</option>
+											</select>
+										
+									</div>
+						<div class="col-md-12 mb-3" >
+			               <label class="form-label">Chapter Number<span class="text-danger">*</span></label>
+							<input value="<?php echo $result2['chapter_no'];?>" type="number" name="chapter_no" class="form-control" placeholder="" >
+						</div>
+			                   <div class="col-md-12 mb-3" >
+			               <label class="form-label">Chapter Name<span class="text-danger">*</span></label>
+							<input value="<?php echo $result2['chapter_name'];?>" type="text" name="chapter_name" class="form-control" placeholder="" >
+						</div>
+						<div class="col-md-12 mb-3" >
+			               <label class="form-label">Page Start<span class="text-danger">*</span></label>
+							<input value="<?php echo $result2['page_start'];?>" type="number" name="page_start" class="form-control" placeholder="" >
+						</div>
+						<div class="col-md-12 mb-3" >
+			               <label class="form-label">page end<span class="text-danger">*</span></label>
+							<input value="<?php echo $result2['page_end'];?>" type="number" name="page_end" class="form-control" placeholder="" >
+						</div>
+
+						
+								
+								
+						<div class="col-md-12 mb-3">
+										<label class="control-label">Status</label>
+										<select name="status"  class="form-control" required="required">
+											<option value="">--Select Status--</option>
+											<option value="Active" <?php if($result2['status']=='Active'){echo "selected";} ?>>Active</option>
+											<option value="Inactive" <?php if($result2['status']=='Inactive') {echo "selected";} ?>>Inactive</option>
+										</select>
+										</div>
 							
-					
-					
-					
-					
-					
-					
-					
-					
-				</div>
-			
+							
+										<div class="col-md-12 mb-3">
+										<!--<button type="button" class="btn btn-danger light" data-bs-dismiss="">Close</button>-->
+				<button type="submit" name="update" class="btn btn-primary">Update Chapter</button></div>
+						</div>
+	                     
+					</div>
+				 </div>
+			</form>
 			</div>
-        </div>
+		</div>
+	</div>
+		
 		
  
 		
@@ -190,7 +215,7 @@ if(!isset($_SESSION['log-admin'])) {
         ***********************************-->
 
 
-	</div>
+	
     <!--**********************************
         Main wrapper end
     ***********************************-->
@@ -237,3 +262,46 @@ if(!isset($_SESSION['log-admin'])) {
 	
 </body>
 </html>
+
+
+<script type="text/javascript">
+  function myfunn(valuedata){
+   $.ajax({
+         url:'select_class.php', 
+         method:'post',
+         data: {datapost:valuedata},
+         success : function(result){
+            $('.dataload').html(result);
+         }
+     });
+    }
+</script>
+
+
+
+
+<?php
+// update truck owner
+
+if(isset($_POST['update'])){
+$class_name=$_POST['class_name'];
+$subject_name=$_POST['subject_name'];
+$chapter_no=$_POST['chapter_no'];
+$chapter_name=$_POST['chapter_name'];
+$page_start=$_POST['page_start'];
+$page_end=$_POST['page_end'];
+$status=$_POST['status'];
+
+
+$query1="UPDATE tbl_chapter set class='$class_name',subject='$subject_name',chapter_no='$chapter_no',chapter_name='$chapter_name',page_start='$page_start',page_end='$page_end',status='$status' where chapter_id='$get_id'";
+
+$smtp1=$conn->prepare($query1);
+if($smtp1->execute()){
+	 echo "<script>alert('Updated!!');</script>";
+	echo "<script>window.location='chapter.php'</script>";
+}
+
+}
+?>
+
+ 

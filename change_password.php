@@ -5,7 +5,14 @@ if(!isset($_SESSION['log-admin'])) {
     header('location: login.php');
 } else {
 }
+    $query="SELECT * FROM login WHERE id='1'";
+     $stmt=$conn->prepare($query);
+     $stmt->execute();
+     $result = $stmt->fetch();
+     $username=$result['username'];
+     
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -81,94 +88,50 @@ if(!isset($_SESSION['log-admin'])) {
        <div class="content-body">
             <!-- row -->	
 			<div class="page-titles">
-				<ol class="breadcrumb">
-					<li><i class="fa fa-home fa-1x text-primary"> </i></li>
-					<li><h5 class="bc-title p-2 text-primary"> <b>Dashboard</b></h5></li>
-
-					
-				</ol>
-				
+				<li class="breadcrumb-item"><a href="index.php">
+						<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M2.125 6.375L8.5 1.41667L14.875 6.375V14.1667C14.875 14.5424 14.7257 14.9027 14.4601 15.1684C14.1944 15.4341 13.8341 15.5833 13.4583 15.5833H3.54167C3.16594 15.5833 2.80561 15.4341 2.53993 15.1684C2.27426 14.9027 2.125 14.5424 2.125 14.1667V6.375Z" stroke="#2C2C2C" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M6.375 15.5833V8.5H10.625V15.5833" stroke="#2C2C2C" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						Home </a>
+					</li>				
 			</div>
 			<div class="container-fluid">
-				<div class="row">
-					<div class="col-xl-3 col-sm-6">
-						<div class="card box-hover">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<!-- <div class="">
-										<i class="fa fa-user fa-2x text-primary"> </i>
-									</div> -->
-									<div class="total-projects ms-3">
+				<div class="col-xl-6  ">
+                        <div class="card">
+                            <div class="card-header" >
+                                <h4 class="card-title">CHANGE PASSWORD</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="basic-form">
 
-										<h3 class="text-primary count text-primary"></h3> 
-										<a href="truck_owner.php"><b> Class</b> </a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-sm-6">
-						<div class="card box-hover">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<!-- <div class="">
-										<i class="fa fa-user fa-2x text-primary"> </i>
-									</div> -->
-									<div class="total-projects ms-3">
 
-										<h3 class="text-primary count text-primary"></h3> 
-										<a href="truck_owner.php"><b> Subject</b> </a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-sm-6">
-						<div class="card box-hover">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<!-- <div class="">
-										<i class="fa fa-user fa-2x text-primary"> </i>
-									</div> -->
-									<div class="total-projects ms-3">
+                                        <div class="row" >
+                                         <form  action="" id="submit-form" method="post">
+                                    	 <div id="error" style="font-size: 18px;text-align: center;padding: 10px 0px;"></div>
+                                           
+                                            <div class="mb-3">
+                                                <label class="form-label"></label>
+                                                <input name="oldmail" id="oldmail" type="text" class="form-control" placeholder="old password">
+                                            </div>
+                                             <div class="mb-3 ">
+                                                <label class="form-label"></label>
+                                                <input name="newpass" id="newpass" type="text" class="form-control" placeholder="new password">
+                                            </div>
+                                             <div class="mb-3 ">
+                                                <label class="form-label"></label>
+                                                <input name="confirm" id="confirm" type="text" class="form-control" placeholder="confirm">
+                                            </div>
+                                        <button class= "btn btn-primary btn-block account-btn" name="btn-save" id="btn-submit"  type="submit">Change Password</button>
+                                        </form>
+                                   
+                                          </div>
 
-										<h3 class="text-primary count text-primary"></h3> 
-										<a href="truck_owner.php"><b> Chapter</b> </a>
-									</div>
-								</div>
-							</div>
-						</div>
+                                </div>
+                            </div>
+                        </div>
 					</div>
-					<div class="col-xl-3 col-sm-6">
-						<div class="card box-hover">
-							<div class="card-body">
-								<div class="d-flex align-items-center">
-									<!-- <div class="">
-										<i class="fa fa-user fa-2x text-primary"> </i>
-									</div> -->
-									<div class="total-projects ms-3">
 
-										<h3 class="text-primary count text-primary"></h3> 
-										<a href="truck_owner.php"><b> Lesson</b> </a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-							
-					
-							
-					
-					
-					
-					
-					
-					
-					
-					
-				</div>
-			
-			</div>
         </div>
 		
  
@@ -232,8 +195,70 @@ if(!isset($_SESSION['log-admin'])) {
 	<script src="js/deznav-init.js"></script>
 	<script src="js/demo.js"></script>
 
+	    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="js/validation-min.js"></script>
+
 	
 	
 	
 </body>
 </html>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#submit-form').validate({
+      rules:
+          {
+            oldmail :{
+                required: true,
+                     },
+            newpass :{
+                required: true,
+                minlength: 8,
+                maxlength: 15
+                     },
+            confirm :{
+               required: true,
+               equalTo: '#newpass' 
+                    }
+          },
+      messages :
+          {
+            oldmail : "Please Enter old password",
+            newpass :{
+                required: "please provide new password",
+                minlength: "password at least have 8 characters"
+                   },
+            confirm:
+                   {
+                required: "please confirm password",
+                equalTo: "password doesn't match !"
+                    }
+          },
+      submitHandler: submitForm
+    });
+/* handle form submit */
+function submitForm(){
+
+var data = $("#submit-form").serialize();
+$.ajax({
+type : 'POST',
+url : 'update_password.php',
+data : data,
+success: function(data){
+   $("form").trigger("reset");
+   $('#error').fadeIn().html(data);
+   setTimeOut(function(){
+      $('#error').fadeOut('slow');
+   },2000);
+}
+});
+}
+return false;
+  });
+</script>
